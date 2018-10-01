@@ -81,7 +81,8 @@ module Squcumber
               vals << (value.is_a?(String) ? "'#{value}'" : value)
             end
           end
-          exec("insert into #{schema}.#{table} (#{keys.join(',')}) values (#{vals.join(',')})") unless vals.empty?
+		  escaped_vals = vals.each { |val| @testing_database.escape_string(val) }
+		  exec("insert into #{schema}.#{table} (#{keys.join(',')}) values (#{escaped_vals.join(",")})") unless vals.empty?
         end
 
         def destroy

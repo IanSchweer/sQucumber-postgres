@@ -261,6 +261,7 @@ module Squcumber::Postgres::Mock
       end
 
       before(:each) do
+		allow(testing_database).to receive(:escape_string)
         @dummy = described_class.new(production_database)
         @dummy.insert_mock_values(table, mock)
       end
